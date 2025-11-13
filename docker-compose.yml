@@ -1,0 +1,38 @@
+# -------------------------------------------------------
+# docker-compose básico para subir:
+# - Postgres (db)
+# - Backend FastAPI (backend)
+# -------------------------------------------------------
+
+services:
+  # Serviço do banco de dados PostgreSQL
+  db:
+    image: postgres:${POSTGRES_VERSION:-16}     # Imagem oficial do PostgreSQL, usando a 16 por padrão caso não seja passada nenhuma
+    container_name: edutech_db
+    environment:
+      POSTGRES_DB: "${POSTGRES_DB}"             # nome do banco de dados
+      POSTGRES_USER: "${POSTGRES_USER}"         # usuário do banco de dados
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}" # senha do banco de dados
+    ports:
+      - "${PGPORT:-5433}:5432"                  # expõe a porta 5433 do host → 5432 do container (HOST:CONTAINER)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Volume persistente: garante que os dados NÃO são perdidos ao remover container
+
+  # Serviço do backend FastAPI
+  backend:
+    build: .                                    # Constrói a imagem Docker usando o Dockerfile na raiz do projeto
+    container_name: edutech_backend
+    environment:
+      DB_HOST: db                               # host do banco de dados (nome do serviço do db). Docker cria DNS interno automático
+      DB_PORT: 5432                             # porta do banco de dados
+      DB_NAME: "${POSTGRES_DB}"                 # nome do banco de dados
+      DB_USER: "${POSTGRES_USER}"               # usuário do banco de dados
+      DB_PASSWORD: "${POSTGRES_PASSWORD}"       # senha do banco de dados
+    ports:
+      - "8000:8000"                             # expõe a porta 8000 do host → 8000 do container (HOST:CONTAINER). Backend acessível no localhost:8000
+    depends_on:
+      - db
+
+# Volume persistente para o banco de dados PostgreSQL, garantindo que os dados não sejam perdidos ao remover o container
+volumes:  
+  postgres_data:  
