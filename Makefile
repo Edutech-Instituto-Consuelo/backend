@@ -1,6 +1,6 @@
 # -------------------------
 # Configuração de Python local (fora do Docker)
-VENV = venv
+VENV = .venv
 PYTHON = $(VENV)/bin/python3
 REQS = requirements.txt
 
@@ -25,6 +25,7 @@ clean: ## Limpa arquivos temporários locais
 	@rm -rf $(VENV)
 	@echo "Feito!"
 
+.PHONY: all venv main clean help
 
 # -------------------------
 # Cores/estilo (ANSI)
@@ -74,9 +75,12 @@ help: ## Mostra esta ajuda
 	@grep -E '^[a-zA-Z0-9_.-]+:.*?## ' Makefile | sed -E 's/:.*?## /: /' | sort | awk '{printf "  $(FG_CYAN)%-18s$(RESET) %s\n", $$1, substr($$0, index($$0,$$2))}'
 	@echo ""
 
+
 # =========================
 # Docker / Docker Compose
 # =========================
+.PHONY: build build-log up up-b down down-v status logs
+
 # -------- Comandos base para Docker
 COMPOSE			= docker compose
 DOCKER_BUILD	= $(COMPOSE) build
@@ -106,8 +110,36 @@ down: ## Derruba containers (mantém volume); use 'make down-v' para reset total
 down-v: ## Derruba containers e remove volume (reset do banco)
 	$(call spin,Derrubando containers e volumes (Docker), $(DOCKER_DOWN_V))
 
+status: ## Mostra status dos serviços do Docker Compose
+	$(COMPOSE) ps
+
 logs: ## Mostra logs dos serviços do Docker Compose
 	$(COMPOSE) logs -f
 
+# =========================
+# Comandos de banco (Alembic)
+# =========================
+.PHONY: db.revision db.migrate db.downgrade db.current db.history
 
-.PHONY: all venv main clean help build build-log up up-b down down-v logs 
+db.revision: ## Cria uma nova revision com autogenerate [Uso: make db.revision msg="create users table"]
+	@if [ -z "$(msg)" ]; then \
+		echo "✖ Use: make db.revision msg=\"mensagem da migration\""; \
+		exit 1; \
+	fi
+	docker compose exec backend bash -c "cd backend && alembic revision --autogenerate -m '$(msg)'"
+
+db.migrate: ## Aplica todas as migrations pendentes até o head
+	docker compose exec backend bash -c "cd backend && alembic upgrade head"
+ 
+db.downgrade: ## Faz downgrade para uma revision específica [Uso: make db.downgrade rev="7c51cc8a7522"]
+	@if [ -z "$(rev)" ]; then \
+		echo "✖ Use: make db.downgrade rev=\"<revision_id>\""; \
+		exit 1; \
+	fi
+	docker compose exec backend bash -c "cd backend && alembic downgrade '$(rev)'"
+
+db.current: ## Mostra a versão atual aplicada no banco
+	docker compose exec backend bash -c "cd backend && alembic current"
+
+db.history: ## Mostra o histórico de migrations
+	docker compose exec backend bash -c "cd backend && alembic history"

@@ -4,9 +4,9 @@ uvicorn==0.27.0
 sqlalchemy==2.0.25
 psycopg2-binary==2.9.9
 pydantic==2.5.3
-python-jose[cryptography]==3.3.0  # JWT
-passlib[bcrypt]==1.7.4  # Hash de senhas
-python-multipart==0.0.6  # Upload de arquivos
-alembic==1.13.1  # Migrações de banco
-python-dotenv==1.0.0  # Variáveis de ambiente
-pytest==7.4.4  # Testes
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+alembic==1.13.1
+python-dotenv==1.0.0
+pytest==7.4.4
