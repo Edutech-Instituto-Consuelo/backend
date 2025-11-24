@@ -1,0 +1,45 @@
+from fastapi import FastAPI
+import os
+
+# importando a função de teste de conexão com Supabse
+from .database import test_connection 
+
+# Instância básica da API
+app = FastAPI(
+    title="API de Teste - EduTech",
+    description="API simulada apenas para testar Docker + Supabase",
+    version="1.0.0"
+)
+
+# Rota raiz
+@app.get("/")
+def root():
+    return {"message": "API rodando com sucesso dentro do Docker"}
+
+# Outra rota simples
+@app.get("/status")
+def status():
+    return {"status": "ok", "docker": True, "backend": "online"}
+
+# Rota para testar variáveis de ambiente de DB
+import os
+@app.get("/env")
+def read_env():
+    return {
+        "DATABASE_URL": os.getenv("DATABASE_URL"),
+    }
+
+# Rota para testar a conexão com o Supabse
+@app.get("/db-check")
+def db_check():
+    try:
+        test_connection()
+        return {
+            "db": "ok", 
+            "detail": "Conexão com Supabase funcionando!"
+        }
+    except Exception as e:
+        return {
+            "db": "error",
+            "detail": str(e)
+        }
