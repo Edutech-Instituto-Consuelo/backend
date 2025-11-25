@@ -19,7 +19,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 # Lê a URL do banco de dados da variável de ambiente
 #DATABASE_URL ="postgresql://gabriel:Dragonoide01@host.docker.internal:5432/edutech"
 
-DATABASE_URL = "postgresql://postgres.jomvahgsurohtklyztce:Edut3ch!2025@aws-1-sa-east-1.pooler.supabase.com:5432/postgres"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL não foi definida. Verifique seu .env e docker-compose.")

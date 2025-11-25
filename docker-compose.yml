@@ -23,9 +23,7 @@ services:
     build: .                                    # Constrói a imagem Docker usando o Dockerfile na raiz do projeto
     container_name: edutech_backend
     env_file:
-      - .env
-    environment:
-      DATABASE_URL: "postgresql://postgres:Edut3ch!2025@db.jomvahgsurohtklyztce.supabase.co:5432/postgres"           # URL de conexão com o banco de dados Supabse
+      - .env           # URL de conexão com o banco de dados Supabse
     ports:
       - "8000:8000"                             # expõe a porta 8000 do host → 8000 do container (HOST:CONTAINER). Backend acessível no localhost:8000
     # depends_on:
