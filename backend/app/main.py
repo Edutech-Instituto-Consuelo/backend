@@ -1,8 +1,11 @@
 from fastapi import FastAPI
+from backend.app.routers import auth
 import os
 
 # importando a função de teste de conexão com Supabse
-from .database import test_connection 
+from .database import test_connection, Base, engine
+
+Base.metadata.create_all(bind=engine)
 
 # Instância básica da API
 app = FastAPI(
@@ -10,6 +13,8 @@ app = FastAPI(
     description="API simulada apenas para testar Docker + Supabase",
     version="1.0.0"
 )
+
+app.include_router(auth.router)
 
 # Rota raiz
 @app.get("/")
@@ -35,7 +40,7 @@ def db_check():
     try:
         test_connection()
         return {
-            "db": "ok", 
+            "db": "ok",
             "detail": "Conexão com Supabase funcionando!"
         }
     except Exception as e:

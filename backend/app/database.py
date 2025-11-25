@@ -17,7 +17,9 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 # Lê a URL do banco de dados da variável de ambiente
-DATABASE_URL = os.getenv("DATABASE_URL")
+#DATABASE_URL ="postgresql://gabriel:Dragonoide01@host.docker.internal:5432/edutech"
+
+DATABASE_URL = "postgresql://postgres.jomvahgsurohtklyztce:Edut3ch!2025@aws-1-sa-east-1.pooler.supabase.com:5432/postgres"
 
 if not DATABASE_URL:
     raise RuntimeError("DATABASE_URL não foi definida. Verifique seu .env e docker-compose.")
@@ -26,7 +28,9 @@ if not DATABASE_URL:
 engine = create_engine(
     DATABASE_URL,
     pool_pre_ping=True,
-    connect_args={"sslmode": "require"}, # reforça o SSL (além do ?sslmode=require na URL)
+    connect_args={
+        "sslmode": "require",
+        "options": "-c inet_server_family=4"}, # reforça o SSL (além do ?sslmode=require na URL)
 )
 
 # Fábrica de sessões (para serem utilizadas nos serviços/repos)
@@ -42,3 +46,14 @@ def test_connection():
     """
     with engine.connect() as conn:
         conn.execute(text("SELECT 1"))
+
+def get_db():
+    """
+    Função que cria uma sessão com o banco de dados, mantendo a garantia que será fechada.
+    Usado como dependencia do FastAPI
+    """
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
