@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
 from backend.app.database import get_db
-from passlib.hash import pbkdf2_sha256
+from backend.app.services.auth_service import create_salt, verify_password, get_password_hash
 from datetime import timedelta
 from fastapi.security import OAuth2PasswordRequestForm
 
@@ -15,11 +15,8 @@ router = APIRouter(
 	tags=["Auth"]
 )
 
-def get_password_hash(password: str) -> str:
-	"""
-	Função que recebe uma string(senha) e retorna o hash da string
-	"""
-	return pbkdf2_sha256.hash(password)
+
+
 
 @router.post("/register", response_model=UsuarioResponse, status_code=status.HTTP_201_CREATED)
 def registra_usuario(
@@ -39,7 +36,7 @@ def registra_usuario(
 	db_usuario = Usuario(
 		nome = usuario.nome,
 		email = usuario.email,
-		senha_hash = get_password_hash(usuario.senha_hash),
+		senha_hash = get_password_hash(create_salt(usuario.senha_hash, usuario.email)),
 		tipo_usuario = usuario.tipo_usuario,
 		data_nascimento = usuario.data_nascimento
 	)
