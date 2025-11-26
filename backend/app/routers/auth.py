@@ -1,22 +1,22 @@
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.services.auth_service import create_salt, verify_password, get_password_hash
 from datetime import timedelta
 from fastapi.security import OAuth2PasswordRequestForm
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.models.user import Usuario
-from app.schemas.user import UsuarioCriar, UsuarioResponse
+from app.schemas.user import UsuarioCriar, UsuarioResponse, TokenResponse, UsuarioLogin
+from app.schemas.user import UsuarioLogin
 from typing import List
+from app.core.security import create_access_token
 
 
 router = APIRouter(
 	prefix="/auth",
 	tags=["Auth"]
 )
-
-
-
 
 @router.post("/register", response_model=UsuarioResponse, status_code=status.HTTP_201_CREATED)
 def registra_usuario(
@@ -55,3 +55,13 @@ def listar_usuarios(
 
 	return query
 
+@router.post("/login", response_model=TokenResponse)
+def login(data: UsuarioLogin, db: Session = Depends(get_db)):
+    user = db.query(Usuario).filter(Usuario.email == UsuarioLogin.email).first()
+    if not user or not verify_password(data.password, user.hashed_password):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Credenciais inválidas"
+        )
+    token = create_access_token(user_id=user.id, email=user.email, role=user.role)
+    return {"access_token": token}

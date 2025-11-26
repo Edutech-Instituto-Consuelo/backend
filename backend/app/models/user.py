@@ -5,8 +5,6 @@ from sqlalchemy.orm import relationship
 from app.database import Base # onde Base = declarative_base()
 
 
-
-
 class Usuario(Base):
     # Modelo do Usuario
 
@@ -20,6 +18,4 @@ class Usuario(Base):
     data_nascimento = Column(Date, nullable=False)
     data_cadastro = Column(DateTime, nullable=False, server_default=func.now())
     ultimo_login = Column(DateTime, nullable=True)
-    
-    #Caso queira deletar um usuario, todos os tokens de refresh associados a ele também serão deletados
-    refresh_tokens = relationship("RefreshToken", back_populates="usuario", cascade="all, delete-orphan")
+    role = Column(String, default="user")
