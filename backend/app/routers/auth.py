@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, status, HTTPException
 from sqlalchemy.orm import Session
-from backend.app.database import get_db
-from backend.app.services.auth_service import create_salt, verify_password, get_password_hash
+from app.database import get_db
+from app.services.auth_service import create_salt, verify_password, get_password_hash
 from datetime import timedelta
 from fastapi.security import OAuth2PasswordRequestForm
 
-from backend.app.models.user import Usuario
-from backend.app.schemas.user import UsuarioCriar, UsuarioResponse
+from app.models.user import Usuario
+from app.schemas.user import UsuarioCriar, UsuarioResponse
 from typing import List
 
 
