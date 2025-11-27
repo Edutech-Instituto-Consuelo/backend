@@ -18,4 +18,3 @@ class Usuario(Base):
     data_nascimento = Column(Date, nullable=False)
     data_cadastro = Column(DateTime, nullable=False, server_default=func.now())
     ultimo_login = Column(DateTime, nullable=True)
-    role = Column(String, default="user")

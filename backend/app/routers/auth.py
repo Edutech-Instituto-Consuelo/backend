@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Depends, status, HTTPException, status
+from fastapi import APIRouter, Depends, status, HTTPException, status, Request
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.services.auth_service import create_salt, verify_password, get_password_hash
+from app.core.security import get_current_user
 from datetime import timedelta
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.exc import SQLAlchemyError
@@ -47,9 +48,7 @@ def registra_usuario(
 	return db_usuario
 
 @router.get("/usuarios", response_model=List[UsuarioResponse])
-def listar_usuarios(
-	db: Session = Depends(get_db)
-):
+def listar_usuarios(db: Session = Depends(get_db)):
 	"""Função que retorna todos os usuarios cadastrados"""
 	query = db.query(Usuario)
 
@@ -57,11 +56,13 @@ def listar_usuarios(
 
 @router.post("/login", response_model=TokenResponse)
 def login(data: UsuarioLogin, db: Session = Depends(get_db)):
-    user = db.query(Usuario).filter(Usuario.email == UsuarioLogin.email).first()
-    if not user or not verify_password(data.password, user.hashed_password):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Credenciais inválidas"
-        )
-    token = create_access_token(user_id=user.id, email=user.email, role=user.role)
-    return {"access_token": token}
+	user = db.query(Usuario).filter(Usuario.email == data.email).first()
+	if not user:
+		raise HTTPException(status_code=401, detail="Credenciais inválidas")
+
+	senha_com_salt = create_salt(data.senha, user.email)
+	if not verify_password(senha_com_salt, user.senha_hash):
+		raise HTTPException(status_code=402, detail="Credenciais inválidas")
+
+	token = create_access_token(user_id=user.id, email=user.email)
+	return {"access_token": token}
