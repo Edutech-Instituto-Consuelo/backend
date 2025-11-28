@@ -22,8 +22,5 @@ COPY requirements.txt .
 # Instala as dependências Python listadas no arquivo requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copia todo o conteúdo do diretório atual para o diretório de trabalho dentro do container
-COPY . .
-
-# Comando para iniciar a aplicação usando Uvicorn, especificando o módulo e a aplicação FastAPI, além do host e porta
-CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+COPY backend /app
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

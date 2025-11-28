@@ -1,4 +1,4 @@
-#from backend.app.routers.auth import create_salt, get_password_hash
+#from app.routers.auth import create_salt, get_password_hash
 from passlib.hash import pbkdf2_sha256
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
