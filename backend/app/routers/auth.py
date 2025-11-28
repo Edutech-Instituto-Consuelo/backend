@@ -63,13 +63,19 @@ def listar_usuarios(db: Session = Depends(get_db)):
 """
 @router.post("/login", response_model=TokenResponse)
 def login(data: UsuarioLogin, db: Session = Depends(get_db)):
-	user = db.query(Usuario).filter(Usuario.email == data.email)
+	user = db.query(Usuario).filter(Usuario.email == data.email).first()
 	if not user:
-		raise HTTPException(status_code=401, detail="Credenciais inválidas")
+		raise HTTPException(
+			status_code=status.HTTP_401_UNAUTHORIZED,
+			detail="Credenciais inválidas"
+			)
 
 	senha_com_salt = create_salt(data.senha, user.email)
 	if not verify_password(senha_com_salt, user.senha_hash):
-		raise HTTPException(status_code=402, detail="Credenciais inválidas")
+		raise HTTPException(
+			status_code=status.HTTP_401_UNAUTHORIZED,
+			detail="Credenciais inválidas"
+			)
 
 	token = create_access_token(user_id=user.id, email=user.email)
 	return {"access_token": token}

@@ -2,11 +2,25 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi import Request, HTTPException, status
 from fastapi.responses import JSONResponse
 from app.core.security import verify_token
+import os
 
 PUBLIC_PATHS = {
 	"/auth/login",
 	"/auth/register",
 }
+
+"""
+	Verificação do tipo de env, basicamente se no .env estiver explicito algo diferente de development ele não adiciona a public_paths as seguintes rotas.
+	Obs(não necessita colocar na env, pois caso não tenha nada ele considera como development por padrão).
+"""
+
+if os.getenv("ENV", "development") == "development":
+	PUBLIC_PATHS.update({
+		"/docs",
+		"/openapi.json",
+		"/db-check",
+		"/",
+	})
 
 def register_jwt_middleware(app):
 	"""
