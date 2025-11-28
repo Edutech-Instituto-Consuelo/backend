@@ -54,9 +54,16 @@ def listar_usuarios(db: Session = Depends(get_db)):
 
 	return query
 
+# Rota de login
+"""
+	Recebo dados em json do front. Padrão email e senha como definido no shema user UsuarioLogin.
+	Depois busco no banco algum usuario que tenha o mesmo email, verifico se consigo achar,
+	se conseguir verifico a senha e caso esteja errado retorn erro pro front. Caso esetja certo gero
+	o token e retorno o mesmo para o front.
+"""
 @router.post("/login", response_model=TokenResponse)
 def login(data: UsuarioLogin, db: Session = Depends(get_db)):
-	user = db.query(Usuario).filter(Usuario.email == data.email).first()
+	user = db.query(Usuario).filter(Usuario.email == data.email)
 	if not user:
 		raise HTTPException(status_code=401, detail="Credenciais inválidas")
 

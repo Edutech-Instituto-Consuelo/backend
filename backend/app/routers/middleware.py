@@ -9,6 +9,14 @@ PUBLIC_PATHS = {
 }
 
 def register_jwt_middleware(app):
+	"""
+		Este middleware intercepta todas as requisições HTTP e realiza as seguintes ações:
+		1. Permite acesso direto às rotas públicas definidas em PUBLIC_PATHS.
+		2. Verifica se o header 'Authorization' está presente e no formato 'Bearer <token>'.
+		3. Valida o token JWT utilizando a função `verify_token`.
+		4. Armazena os dados do usuário presentes no playload como `request.state.user` para uso nos endpoints.
+		5. Trata erros de autenticação retornando HTTP 401 e erros internos retornando HTTP 500.
+	"""
 	@app.middleware("http")
 	async def jwt_middleware(request: Request, call_next):
 		try:
