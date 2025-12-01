@@ -29,8 +29,10 @@ services:
     # depends_on:
     #   - db
     volumes:
-      - ./backend:/app/backend                  # Monta o diretório backend local dentro do container para desenvolvimento ao vivo
+      - ./backend:/app                  # Monta o diretório backend local dentro do container para desenvolvimento ao vivo
     user: "1000:1000"                           # Executa o container com o UID/GID do usuário atual para evitar problemas de permissão
+    working_dir: /app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
 
 # Volume persistente para o banco de dados PostgreSQL, garantindo que os dados não sejam perdidos ao remover o container
 volumes:

@@ -58,13 +58,14 @@ class UsuarioAtualizarParcial(BaseModel):
     data_nascimento: Optional[date] = None
 
 
-
-
 # schema usado quando o usuário faz login.
 class UsuarioLogin(BaseModel):
     email: EmailStr
     senha: str
 
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
 
 
 class UsuarioAdminUpdate(BaseModel):

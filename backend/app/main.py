@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from backend.app.routers import auth
+from app.routers import auth, middleware
 import os
 
 # importando a função de teste de conexão com Supabse
@@ -13,6 +13,8 @@ app = FastAPI(
     description="API simulada apenas para testar Docker + Supabase",
     version="1.0.0"
 )
+
+middleware.register_jwt_middleware(app)
 
 app.include_router(auth.router)
 
