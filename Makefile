@@ -142,4 +142,4 @@ db.current: ## Mostra a versão atual aplicada no banco
 	docker compose exec backend bash -c "alembic current"
 
 db.history: ## Mostra o histórico de migrations
-	docker compose exec backend bash -c "aplembic history"
+	docker compose exec backend bash -c "alembic history"
