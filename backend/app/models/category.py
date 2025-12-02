@@ -4,7 +4,7 @@ from app.database import Base
 
 class Categoria(Base):
     """
-    Model Category
+    Modelo Categoria
     --------------
     Representa a tabela 'categorias' no banco de dados
     Cada categoria agrupa cursos semelhantes (ex.: Tecnologia, Design, Marketing)
@@ -26,8 +26,8 @@ class Categoria(Base):
     # RELACIONAMENTO 1:N → Uma categoria pode ter vários cursos
     # Relacionamento com courses. 
     # O 'back_populates' deve corresponder ao atributo 'categoria' de dentro do model "Course"
-    courses = relationship(
-        "Course", 
+    cursos = relationship(
+        "Curso", 
         back_populates="categoria",
         cascade="all, delete-orphan",
         # permite deletar cursos quando a categoria for removida. 

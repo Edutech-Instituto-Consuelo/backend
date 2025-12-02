@@ -18,3 +18,12 @@ class Usuario(Base):
     data_nascimento = Column(Date, nullable=False)
     data_cadastro = Column(DateTime, nullable=False, server_default=func.now())
     ultimo_login = Column(DateTime, nullable=True)
+
+    # Relacionamento 1:1 com Instructor.
+    # Se o usuário for do tipo "instrutor", este atributo aponta
+    # para o registro correspondente na tabela 'instrutores'.
+    instrutor = relationship(
+        "Instrutor",
+        back_populates="usuario",
+        uselist=False,  # garante relação 1:1
+    )
