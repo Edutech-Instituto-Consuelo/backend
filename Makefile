@@ -126,20 +126,20 @@ db.revision: ## Cria uma nova revision com autogenerate [Uso: make db.revision m
 		echo "✖ Use: make db.revision msg=\"mensagem da migration\""; \
 		exit 1; \
 	fi
-	docker compose exec backend bash -c "cd backend && alembic revision --autogenerate -m '$(msg)'"
+	docker compose exec backend bash -c "alembic revision --autogenerate -m '$(msg)'"
 
 db.migrate: ## Aplica todas as migrations pendentes até o head
-	docker compose exec backend bash -c "cd backend && alembic upgrade head"
+	docker compose exec backend bash -c "alembic upgrade head"
  
 db.downgrade: ## Faz downgrade para uma revision específica [Uso: make db.downgrade rev="7c51cc8a7522"]
 	@if [ -z "$(rev)" ]; then \
 		echo "✖ Use: make db.downgrade rev=\"<revision_id>\""; \
 		exit 1; \
 	fi
-	docker compose exec backend bash -c "cd backend && alembic downgrade '$(rev)'"
+	docker compose exec backend bash -c "alembic downgrade '$(rev)'"
 
 db.current: ## Mostra a versão atual aplicada no banco
-	docker compose exec backend bash -c "cd backend && alembic current"
+	docker compose exec backend bash -c "alembic current"
 
 db.history: ## Mostra o histórico de migrations
-	docker compose exec backend bash -c "cd backend && alembic history"
+	docker compose exec backend bash -c "aplembic history"
