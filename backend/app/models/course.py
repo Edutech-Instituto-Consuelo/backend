@@ -21,6 +21,7 @@ class Curso(Base):
     id = Column(Integer, primary_key=True, index=True)
     titulo = Column(String(200), nullable=False)
     descricao = Column(Text, nullable=False)
+    nivel = Column(String(50), nullable=False)  # Iniciante, Intermediário, Avançado
     preco = Column(Float, nullable=False)
     carga_horaria = Column(Integer, nullable=False)  # em horas
     
