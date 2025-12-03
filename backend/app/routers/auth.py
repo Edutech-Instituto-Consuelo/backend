@@ -78,4 +78,5 @@ def login(data: UsuarioLogin, db: Session = Depends(get_db)):
 			)
 
 	token = create_access_token(user_id=user.id, email=user.email)
+	print("to aqui")
 	return {"access_token": token}

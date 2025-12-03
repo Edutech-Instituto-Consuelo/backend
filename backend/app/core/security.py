@@ -5,23 +5,29 @@ from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import Usuario
-from app.core.config import JWT_SECRET_KEY, JWT_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.core.config import JWT_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, JWT_SECRET_KEY
 
 
 # Função na qual gera o token JWT e retorna o mesmo
 def create_access_token(user_id: int, email: str):
-
+	print("antes")
 	expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-
+	print(expire)
 	payload = {
 		"sub": str(user_id),
 		"email": email,
-		"exp": expire
+		"exp": expire.timestamp()
 	}
+	print(payload)
 
 	# jwt.encode = cria a string JWT segura e assinada
-	token = jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
 
+	print(JWT_SECRET_KEY)
+	token = jwt.encode(payload, key=JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
+	print("aaaaaaa")
+
+	print("depois")
+	print(token)
 	return token
 
 # Função para verificar se o token é valido
