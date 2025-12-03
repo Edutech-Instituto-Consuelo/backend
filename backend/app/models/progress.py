@@ -3,7 +3,6 @@ from sqlalchemy import (
     DateTime, ForeignKey, PrimaryKeyConstraint
 )
 from sqlalchemy.orm import relationship
-from sqlalchemy.sql import func
 
 from app.database import Base
 
@@ -36,15 +35,22 @@ class ProgressoAulas(Base):
     )
 
     # DETALHES DO PROGRESSO
-    concluido = Column(Boolean, nullable=False, default=False)          # Indica se a aula foi concluída
-    progresso_percentual = Column(Integer, nullable=False, default=0)   # Percentual de progresso na aula (0-100)
-
-    # CONTROLE DE DATA/HISTÓRICO
-    data_ultimo_acesso = Column(
-        DateTime(timezone=True),
+    # Percentual de progresso na aula (0-100)
+    progresso_percentual = Column(
+        Integer,
         nullable=False,
-        server_default=func.now(),
-        onupdate=func.now(),
+        default=0,
+    )   
+    # Indica se a aula foi concluída
+    concluido = Column(
+        Boolean,
+        nullable=False,
+        default=False,  
+    )
+    # Data de conclusão da aula, preenchida quando a aula é marcada como concluída
+    data_conclusao = Column(
+        DateTime(timezone=True),
+        nullable=True,
     )
 
     # RELACIONAMENTOS
