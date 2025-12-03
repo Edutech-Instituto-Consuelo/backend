@@ -58,3 +58,10 @@ class Aula(Base):
         "Modulo",
         back_populates="aulas",
     )
+
+    # Progresso 1:N → Uma aula pode ter muitos registros de progresso
+    progresso_aulas = relationship(
+        "ProgressoAulas",
+        back_populates="aula",
+        cascade="all, delete-orphan",
+    )

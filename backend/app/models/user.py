@@ -27,3 +27,11 @@ class Usuario(Base):
         back_populates="usuario",
         uselist=False,  # garante relação 1:1
     )
+
+    # Relacionamento 1:N com Matricula.
+    # Um usuário (aluno) pode ter muitas matrículas.
+    matriculas = relationship(
+        "Matricula",
+        back_populates="aluno",
+        cascade="all, delete-orphan",
+    )
