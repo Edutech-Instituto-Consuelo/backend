@@ -36,6 +36,7 @@ def registra_usuario(
 		)
 	db_usuario = Usuario(
 		nome = usuario.nome,
+		sobrenome = usuario.sobrenome,
 		email = usuario.email,
 		senha_hash = get_password_hash(create_salt(usuario.senha_hash, usuario.email)),
 		tipo_usuario = usuario.tipo_usuario,
@@ -79,3 +80,9 @@ def login(data: UsuarioLogin, db: Session = Depends(get_db)):
 
 	token = create_access_token(user_id=user.id, email=user.email)
 	return {"access_token": token}
+
+# Rota para obter informações do usuário autenticado
+@router.get("/me", response_model=UsuarioResponse)
+def get_me(usuario = Depends(get_current_user)):
+	"""Rota para obter informações do usuário autenticado"""
+	return usuario
