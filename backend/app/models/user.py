@@ -27,7 +27,7 @@ class Usuario(Base):
         autoincrement=True,
     )
     nome = Column(String(45), nullable=False)
-    sobrenome = Column(String(45), nullable=True)
+    sobrenome = Column(String(45), nullable=False)
     data_nascimento = Column(Date, nullable=False)
     email = Column(String(100), nullable=False, unique=True)
     senha_hash = Column(String(255), nullable=False)
