@@ -1,0 +1,155 @@
+Table usuarios {
+  id                int          [pk, increment
+    ]
+  nome              varchar(45)
+  sobrenome         varchar(45)
+  data_nascimento   date
+  email             varchar(100) [unique
+    ]
+  senha_hash        varchar(255)
+  tipo_usuario      varchar(20)  [default: 'aluno'
+    ]
+  data_cadastro     timestamp    [default: `now()`
+    ]
+  ultimo_login      timestamp
+  ultima_atualizacao timestamptz [default: `now()`
+    ]
+}
+
+Table especialidade {
+  id        int  [pk, increment
+    ]
+  nome      varchar(100) [unique
+    ]
+  descricao text
+}
+
+Table instrutores {
+  id               int [pk
+    ]
+  especialidade    int
+  biografia        varchar(300)
+  data_cadastro    timestamp [default: `now()`
+    ]
+  ultima_alteracao timestamp [default: `now()`
+    ]
+}
+
+Table categorias {
+  id        int [pk, increment
+    ]
+  nome      varchar(100) [unique
+    ]
+  descricao text
+}
+
+Table cursos {
+  id                 int [pk, increment
+    ]
+  titulo             varchar(200)
+  descricao          text
+  nivel              varchar(50)
+  preco              float
+  carga_horaria      int
+  categoria_id       int
+  instrutor_id       int
+  data_criacao       timestamptz [default: `now()`
+    ]
+  ultima_atualizacao timestamptz [default: `now()`
+    ]
+}
+
+Table modulos {
+  id                 int [pk, increment
+    ]
+  titulo             varchar(255)
+  descricao          text
+  ordem              int
+  curso_id           int
+  data_criacao       timestamptz [default: `now()`
+    ]
+  ultima_atualizacao timestamptz [default: `now()`
+    ]
+}
+
+Table aulas {
+  id                 int [pk, increment
+    ]
+  titulo             varchar(200)
+  ordem_aula         int
+  duracao_minutos    int
+  tipo               varchar(50)
+  subtitulo          text
+  modulo_id          int
+  data_criacao       timestamptz [default: `now()`
+    ]
+  ultima_atualizacao timestamptz [default: `now()`
+    ]
+}
+
+Table matriculas {
+  id              int [pk, increment
+    ]
+  aluno_id        int
+  curso_id        int
+  data_matricula  timestamptz [default: `now()`
+    ]
+  status_matricula varchar(12) [default: 'ativa'
+    ]
+  data_conclusao  timestamptz
+}
+
+Table avaliacoes {
+  id             int [pk, increment
+    ]
+  matricula_id   int
+  nota           int
+  comentario     varchar(500)
+  data_avaliacao timestamptz [default: `now()`
+    ]
+}
+
+Table certificados {
+  id             uuid [pk
+    ]
+  matricula_id   int  [unique
+    ]
+  data_conclusao timestamptz
+  data_emissao   timestamptz [default: `now()`
+    ]
+}
+
+Table progresso_aulas {
+  matricula_id       int
+  aula_id            int
+  progresso_percentual int  [default: 0
+    ]
+  concluido          boolean [default: false
+    ]
+  data_conclusao     timestamptz
+
+Indexes {
+    (matricula_id, aula_id) [pk
+        ]
+    }
+}
+
+Ref: instrutores.id - usuarios.id
+Ref: instrutores.especialidade > especialidade.id
+
+Ref: cursos.categoria_id > categorias.id
+Ref: cursos.instrutor_id > instrutores.id
+
+Ref: modulos.curso_id > cursos.id
+
+Ref: aulas.modulo_id > modulos.id
+
+Ref: matriculas.aluno_id > usuarios.id
+Ref: matriculas.curso_id > cursos.id
+
+Ref: avaliacoes.matricula_id > matriculas.id
+
+Ref: certificados.matricula_id > matriculas.id
+
+Ref: progresso_aulas.matricula_id > matriculas.id
+Ref: progresso_aulas.aula_id > aulas.id
