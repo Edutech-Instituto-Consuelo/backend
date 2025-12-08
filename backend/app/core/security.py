@@ -46,18 +46,6 @@ def verify_token(token: str):
 			status_code=status.HTTP_401_UNAUTHORIZED,
 			detail="Token inválido ou expirado.")
 
-# Função que verifica token e pega o objeto user no banco e retorna o mesmo
-#def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-#	data = verify_token(token)
-#
-#	user = db.query(Usuario).filter(Usuario.id == data["id"]).first()
-#	if not user:
-#		raise HTTPException(
-#			status_code=status.HTTP_401_UNAUTHORIZED,
-#			detail="Usuário não encontrado.")
-#
-#	return user
-
 def allowed_roles(*list_roles:str):
 	"""Função que funciona como um decorador no fastAPI, deve ser usada atraves de um Depends nas rotas
 
