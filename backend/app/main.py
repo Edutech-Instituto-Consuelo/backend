@@ -1,5 +1,8 @@
 from fastapi import FastAPI
-from app.routers import auth, middleware
+from fastapi.middleware.cors import CORSMiddleware
+from app.core import middleware
+from app.core.cors import setup_cors
+from app.routers import auth
 import os
 
 # importando a função de teste de conexão com Supabse
@@ -12,6 +15,14 @@ app = FastAPI(
     title="API de Teste - EduTech",
     description="API simulada apenas para testar Docker + Supabase",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 middleware.register_jwt_middleware(app)
