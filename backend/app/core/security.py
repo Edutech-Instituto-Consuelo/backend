@@ -1,23 +1,22 @@
 # app/core/security.py
 from datetime import datetime, timedelta
-from fastapi import HTTPException, status, Depends
-from fastapi.security import OAuth2PasswordBearer
+from fastapi import HTTPException, status, Depends, Request
 from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import Usuario
 from app.core.config import JWT_SECRET_KEY, JWT_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 # Função na qual gera o token JWT e retorna o mesmo
-def create_access_token(user_id: int, email: str):
+def create_access_token(user_id: int, email: str , role: str):
 
 	expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
 	payload = {
 		"sub": str(user_id),
 		"email": email,
+		"role" : role,
 		"exp": expire
 	}
 
@@ -38,8 +37,9 @@ def verify_token(token: str):
 
 		user_id = payload.get("sub")
 		email = payload.get("email")
+		role = payload.get("role")
 		exp = payload.get("exp")
-		return {"id": int(user_id), "email": email, "exp": exp}
+		return {"id": int(user_id), "email": email, "role": role, "exp": exp}
 
 	except JWTError:
 		raise HTTPException(
@@ -47,13 +47,32 @@ def verify_token(token: str):
 			detail="Token inválido ou expirado.")
 
 # Função que verifica token e pega o objeto user no banco e retorna o mesmo
-def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-	data = verify_token(token)
+#def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+#	data = verify_token(token)
+#
+#	user = db.query(Usuario).filter(Usuario.id == data["id"]).first()
+#	if not user:
+#		raise HTTPException(
+#			status_code=status.HTTP_401_UNAUTHORIZED,
+#			detail="Usuário não encontrado.")
+#
+#	return user
 
-	user = db.query(Usuario).filter(Usuario.id == data["id"]).first()
-	if not user:
-		raise HTTPException(
-			status_code=status.HTTP_401_UNAUTHORIZED,
-			detail="Usuário não encontrado.")
+def allowed_roles(*list_roles:str):
+	"""Função que funciona como um decorador no fastAPI, deve ser usada atraves de um Depends nas rotas
 
-	return user
+	Exemplo de uso: Depens(allowed_roles("aluno", "admin", "instrutor")).
+	Todas as roles passadas no argumentos serão autorizadas, se não passar nada, todas tem acesso
+	"""
+	def dependency(request: Request) -> dict:
+		"""Função dependencia que retorna dicionario com os dados do payload do usuario"""
+		user = request.state.user
+		role = user.get("role")
+		print(role)
+		if list_roles and role not in list_roles:
+			raise HTTPException(
+				status_code=status.HTTP_401_UNAUTHORIZED,
+				detail="Role não permitida"
+			)
+		return user
+	return dependency
