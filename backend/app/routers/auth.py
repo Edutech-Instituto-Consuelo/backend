@@ -46,7 +46,7 @@ def registra_usuario(
 	return db_usuario
 
 @router.get("/usuarios", response_model=List[UsuarioResponse])
-def listar_usuarios(db: Session = Depends(get_db)):
+def listar_usuarios(db: Session = Depends(get_db) , require = Depends(allowed_roles("admin"))):
 	"""Função que retorna todos os usuarios cadastrados"""
 	query = db.query(Usuario)
 
