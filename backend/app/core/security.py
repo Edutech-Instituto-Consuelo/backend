@@ -1,12 +1,14 @@
 # app/core/security.py
 from datetime import datetime, timedelta
 from fastapi import HTTPException, status, Depends
+from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import Usuario
 from app.core.config import JWT_SECRET_KEY, JWT_ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 # Função na qual gera o token JWT e retorna o mesmo
 def create_access_token(user_id: int, email: str):
@@ -45,7 +47,7 @@ def verify_token(token: str):
 			detail="Token inválido ou expirado.")
 
 # Função que verifica token e pega o objeto user no banco e retorna o mesmo
-def get_current_user(token: str, db: Session = Depends(get_db)):
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
 	data = verify_token(token)
 
 	user = db.query(Usuario).filter(Usuario.id == data["id"]).first()
