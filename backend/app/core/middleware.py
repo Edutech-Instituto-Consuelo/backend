@@ -1,4 +1,3 @@
-from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi import Request, HTTPException, status
 from fastapi.responses import JSONResponse
 from app.core.security import verify_token
@@ -9,10 +8,6 @@ PUBLIC_PATHS = {
 	"/auth/register",
 }
 
-"""
-	Verificação do tipo de env, basicamente se no .env estiver explicito algo diferente de development ele não adiciona a public_paths as seguintes rotas.
-	Obs(não necessita colocar na env, pois caso não tenha nada ele considera como development por padrão).
-"""
 
 if os.getenv("ENV", "development") == "development":
 	PUBLIC_PATHS.update({
@@ -23,14 +18,7 @@ if os.getenv("ENV", "development") == "development":
 	})
 
 def register_jwt_middleware(app):
-	"""
-		Este middleware intercepta todas as requisições HTTP e realiza as seguintes ações:
-		1. Permite acesso direto às rotas públicas definidas em PUBLIC_PATHS.
-		2. Verifica se o header 'Authorization' está presente e no formato 'Bearer <token>'.
-		3. Valida o token JWT utilizando a função `verify_token`.
-		4. Armazena os dados do usuário presentes no playload como `request.state.user` para uso nos endpoints.
-		5. Trata erros de autenticação retornando HTTP 401 e erros internos retornando HTTP 500.
-	"""
+	"""Função que verifica o token de acesso a api em todas as rotas"""
 	@app.middleware("http")
 	async def jwt_middleware(request: Request, call_next):
 		try:

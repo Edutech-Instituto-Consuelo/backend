@@ -1,11 +1,8 @@
-from fastapi import APIRouter, Depends, status, HTTPException, status, Request
+from fastapi import APIRouter, Depends, status, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.services.auth_service import create_salt, verify_password, get_password_hash
-from app.core.security import get_current_user
-from datetime import timedelta
-from fastapi.security import OAuth2PasswordRequestForm
-from sqlalchemy.exc import SQLAlchemyError
+from app.core.security import allowed_roles
 
 from app.models.user import Usuario
 from app.schemas.user import UsuarioCriar, UsuarioResponse, TokenResponse, UsuarioLogin
@@ -49,21 +46,22 @@ def registra_usuario(
 	return db_usuario
 
 @router.get("/usuarios", response_model=List[UsuarioResponse])
-def listar_usuarios(db: Session = Depends(get_db)):
+def listar_usuarios(db: Session = Depends(get_db) , require = Depends(allowed_roles("admin"))):
 	"""Função que retorna todos os usuarios cadastrados"""
 	query = db.query(Usuario)
 
 	return query
 
 # Rota de login
-"""
+
+@router.post("/login", response_model=TokenResponse)
+def login(data: UsuarioLogin, db: Session = Depends(get_db)):
+	"""
 	Recebo dados em json do front. Padrão email e senha como definido no shema user UsuarioLogin.
 	Depois busco no banco algum usuario que tenha o mesmo email, verifico se consigo achar,
 	se conseguir verifico a senha e caso esteja errado retorn erro pro front. Caso esetja certo gero
 	o token e retorno o mesmo para o front.
-"""
-@router.post("/login", response_model=TokenResponse)
-def login(data: UsuarioLogin, db: Session = Depends(get_db)):
+	"""
 	user = db.query(Usuario).filter(Usuario.email == data.email).first()
 	if not user:
 		raise HTTPException(
@@ -78,11 +76,12 @@ def login(data: UsuarioLogin, db: Session = Depends(get_db)):
 			detail="Credenciais inválidas"
 			)
 
-	token = create_access_token(user_id=user.id, email=user.email)
+	token = create_access_token(user_id=user.id, email=user.email, role=user.tipo_usuario)
 	return {"access_token": token}
 
 # Rota para obter informações do usuário autenticado
 @router.get("/me", response_model=UsuarioResponse)
-def get_me(usuario = Depends(get_current_user)):
+def get_me(db:Session = Depends(get_db), usuario = Depends(allowed_roles())):
 	"""Rota para obter informações do usuário autenticado"""
-	return usuario
+	user = db.query(Usuario).filter(Usuario.id == usuario["id"]).first()
+	return user
