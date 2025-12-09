@@ -8,10 +8,7 @@ def get_password_hash(password: str) -> str:
 
 def create_salt(senha: str , email:str) -> str:
 	"""Função que retorna o salt da senha"""
-	nova_senha = senha
-	for i in range(10):
-		nova_senha += email[i]
-
+	nova_senha = senha + email[:10]
 	return nova_senha
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
