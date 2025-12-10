@@ -1,19 +1,27 @@
-from sqlalchemy import (Column, Integer, String, Text, DateTime, ForeignKey)
+from sqlalchemy import (Column, Integer, String, Text, DateTime, ForeignKey, UniqueConstraint, CheckConstraint)
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from app.database import Base
 
-class Avaliacao(Base):
+class AvaliacaoCurso(Base):
     """
-    Modelo Avaliacao
+    Modelo AvaliacaoCurso
     --------------
-    Representa a tabela 'avaliacoes' no banco de dados
+    Representa a tabela 'avaliacao_curso' no banco de dados
     Cada avaliação está associada a um curso e a um usuário.
     """
 
     # NOME DA TABELA
-    __tablename__ = "avaliacoes"
+    __tablename__ = "avaliacao_curso"
+
+    # RESTRIÇÕES
+    __table_args__ = (
+        # Restrição para evitar múltiplas avaliações do mesmo usuário para o mesmo curso
+        UniqueConstraint('usuario_id', 'curso_id', name='uc_usuario_curso_avaliacao'),
+        # Restrição para garantir que a nota esteja entre 1 e 5
+        CheckConstraint('nota >= 1 AND nota <= 5', name='check_nota_range'),
+    )
 
     # COLUNAS
     id = Column(Integer, primary_key=True, index=True)

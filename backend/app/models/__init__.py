@@ -7,6 +7,7 @@ from .course import Curso
 from .module import Modulo
 from .lesson import Aula
 from .enrollment import Matricula
-from .assessment import Avaliacao
+from .assessment import DesempenhoAluno
+from .evaluation import AvaliacaoCurso
 from .progress import ProgressoAulas
 from .certificate import Certificado
