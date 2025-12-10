@@ -19,9 +19,10 @@ class Curso(Base):
 
     # COLUNAS
     id = Column(Integer, primary_key=True, index=True)
+    url_image = Column(String(200), nullable=True)
     titulo = Column(String(200), nullable=False)
     descricao = Column(Text, nullable=False)
-    nivel = Column(String(50), nullable=False)  # Iniciante, Intermediário, Avançado
+    #nivel = Column(String(50), nullable=False)  # Iniciante, Intermediário, Avançado
     preco = Column(Float, nullable=False)
     carga_horaria = Column(Integer, nullable=False)  # em horas
 
@@ -89,3 +90,11 @@ class Curso(Base):
         back_populates="curso",
         cascade="all, delete-orphan",
     )
+
+    avaliacoes_curso = relationship(
+        "AvaliacaoCurso",
+        back_populates="curso",
+        cascade="all, delete-orphan",
+    )
+
+

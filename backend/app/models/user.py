@@ -31,10 +31,10 @@ class Usuario(Base):
     data_nascimento = Column(Date, nullable=False)
     email = Column(String(100), nullable=False, unique=True)
     senha_hash = Column(String(255), nullable=False)
-    
+
     # Perfil do usuário
     tipo_usuario =  Column(String(20), nullable=False, default="aluno")
-    
+
     # CONTROLE DE DATA/HISTÓRICO
     # data de criação do registro do usuário
     data_cadastro = Column(
@@ -71,5 +71,11 @@ class Usuario(Base):
     matriculas = relationship(
         "Matricula",
         back_populates="aluno",
+        cascade="all, delete-orphan",
+    )
+
+    avaliacoes_curso = relationship(
+        "AvaliacaoCurso",
+        back_populates="usuario",
         cascade="all, delete-orphan",
     )

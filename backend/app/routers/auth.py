@@ -20,6 +20,7 @@ router = APIRouter(
 def registra_usuario(
 	usuario: UsuarioCriar, db: Session = Depends(get_db)
 ):
+
 	"""Função que registra o usuario no banco"""
 
 	ja_existe = db.query(Usuario).filter(
