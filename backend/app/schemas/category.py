@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import Annotated, Optional
 
 nameType = Annotated[str,Field(min_length=1,max_length=100, description="nome da categoria")]
-descriptionType = Annotated[str, Field(min_length=1, max_length=500, description="descroção da categoria")]
+descriptionType = Annotated[str, Field(min_length=1, max_length=500, description="descrição da categoria")]
 
 
 class CategoriaBase(BaseModel):
