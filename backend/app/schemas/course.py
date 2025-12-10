@@ -28,3 +28,21 @@ class CursoResponse(BaseModel):
 
 	class Config:
 		from_attributes = True
+
+class CursoEspecificoResponse(BaseModel):
+	id: int
+	titulo: tituloType
+	descricao: descricaoType
+	avaliacao: mediaAvaliacao
+	quantidade_avaliacoes: qtdAvaliacao
+	quantidade_horas: int
+	id_nivel: int
+	nivel: InstrutorOrNivel
+	preco: precoType
+	id_instrutor: int
+	instrutor: InstrutorOrNivel
+	id_especialidade: int
+	especialidade_instrutor: str
+
+	class Config:
+		from_attributes = True
