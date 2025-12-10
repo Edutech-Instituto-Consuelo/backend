@@ -16,7 +16,7 @@ class CategoriaCreate(CategoriaBase):
 
 class CategoriaResponse(CategoriaBase):
 	"""Schema de resposta da categoria"""
-	id = int
+	id: int
 
 	class Config:
 		from_attributes = True
@@ -24,7 +24,7 @@ class CategoriaResponse(CategoriaBase):
 class CategoriaUpdate(BaseModel):
 	"""Schema de update , metodo patch"""
 
-	name: Optional[nameType] = None
+	nome: Optional[nameType] = None
 	descricao: Optional[descriptionType] = None
 
 
