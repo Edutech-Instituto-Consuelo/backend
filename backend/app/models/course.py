@@ -24,17 +24,22 @@ class Curso(Base):
     nivel = Column(String(50), nullable=False)  # Iniciante, Intermediário, Avançado
     preco = Column(Float, nullable=False)
     carga_horaria = Column(Integer, nullable=False)  # em horas
-    
+
     # CHAVES ESTRANGEIRAS
+    nivel_id = Column(
+        Integer,
+        ForeignKey("niveis.id"),
+        nullable=False
+    )
     categoria_id = Column(
-        Integer, 
-        ForeignKey("categorias.id"), 
+        Integer,
+        ForeignKey("categorias.id"),
         nullable=False
     )
 
     instrutor_id = Column(
-        Integer, 
-        ForeignKey("instrutores.id"), 
+        Integer,
+        ForeignKey("instrutores.id"),
         nullable=False
     )
 
@@ -53,6 +58,12 @@ class Curso(Base):
     )
 
     # RELACIONAMENTOS
+    # Nivel 1:N -> um nivel em varios cursos
+    nivel = relationship(
+        "Nivel",
+        back_populates="cursos",
+    )
+
     # Instrutor 1:N → Um instrutor pode ministrar muitos cursos
     instrutor = relationship(
         "Instrutor",
@@ -61,17 +72,17 @@ class Curso(Base):
 
     # Categoria 1:N → Uma categoria pode ter muitos cursos
     categoria = relationship(
-        "Categoria", 
+        "Categoria",
         back_populates="cursos",
     )
 
     # Matriculas 1:N → Um curso pode ter muitas matrículas
     matriculas = relationship(
-        "Matricula", 
+        "Matricula",
         back_populates="curso",
         cascade="all, delete-orphan",
     )
-   
+
     # Modulos 1:N → Um curso pode ter muitos módulos
     modulos = relationship(
         "Modulo",

@@ -1,5 +1,6 @@
 from app.database import Base
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 
 class Nivel(Base):
 
@@ -11,3 +12,9 @@ class Nivel(Base):
 		index=True,
 		autoincrement=True)
 	descricao =  Column(String(20), nullable=False, unique=True)
+
+	cursos = relationship(
+		"Curso",
+		back_populates="nivel",
+		cascade="all, delete-orphan"
+	)
