@@ -29,6 +29,10 @@ middleware.register_jwt_middleware(app)
 
 app.include_router(auth.router)
 
+# Importar e registrar router de enrollments
+from app.routers import enrollments
+app.include_router(enrollments.router)
+
 # Rota raiz
 @app.get("/")
 def root():
