@@ -5,6 +5,7 @@ from app.database import get_db
 from app.models.evaluation import AvaliacaoCurso
 from app.models.user import Usuario
 from app.models.course import Curso
+from app.models.enrollment import Matricula
 from app.schemas.evaluation import AvaliacaoCriar, AvaliacaoResponse
 from app.core.security import allowed_roles
 
