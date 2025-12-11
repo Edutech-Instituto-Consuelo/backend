@@ -52,7 +52,7 @@ class AvaliacaoCurso(Base):
     # Curso 1:N → Um curso pode ter muitas avaliações
     curso = relationship(
         "Curso",
-        back_populates="avaliacoes",
+        back_populates="avaliacoes_curso",
     )
 
     # Usuário 1:N → Um usuário pode fazer muitas avaliações

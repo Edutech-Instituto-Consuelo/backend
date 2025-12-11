@@ -6,6 +6,7 @@ import os
 PUBLIC_PATHS = {
 	"/auth/login",
 	"/auth/register",
+	"/courses"
 }
 
 

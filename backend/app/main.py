@@ -29,6 +29,11 @@ app.add_middleware(
 middleware.register_jwt_middleware(app)
 
 app.include_router(auth.router)
+app.include_router(category.router)
+app.include_router(level.router)
+app.include_router(course.router)
+app.include_router(instructor.router)
+app.include_router(evaluation.router)
 
 # Rota raiz
 @app.get("/")
