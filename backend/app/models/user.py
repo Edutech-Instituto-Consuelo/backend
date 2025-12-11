@@ -73,3 +73,9 @@ class Usuario(Base):
         back_populates="aluno",
         cascade="all, delete-orphan",
     )
+
+    # Avaliação 1:N → Um usuário pode fazer muitas avaliações
+    reviews_curso = relationship(
+        "AvaliacaoCurso", 
+        back_populates="usuario"
+    )

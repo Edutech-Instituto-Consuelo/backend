@@ -78,3 +78,9 @@ class Curso(Base):
         back_populates="curso",
         cascade="all, delete-orphan",
     )
+
+    # Avaliações 1:N → Um curso pode ter muitas avaliações
+    avaliacoes = relationship(
+        "AvaliacaoCurso", 
+        back_populates="curso"
+    )

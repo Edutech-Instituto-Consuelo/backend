@@ -1,22 +1,19 @@
-from sqlalchemy import (
-    Column, Integer, String,
-    DateTime, ForeignKey
-)
+from sqlalchemy import (Column, Integer, String, DateTime, ForeignKey)
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 
 from app.database import Base
 
-class Avaliacao(Base):
+class DesempenhoAluno(Base):
     """
-    Modelo Avaliacao
+    Modelo DesempenhoAluno
     -----------------
-    Representa a tabela 'avaliacoes' no banco de dados.
-    Cada avaliação está associada a uma matrícula específica e contém a nota e feedback do aluno.
+    Representa a tabela 'desempenho' no banco de dados.
+    Cada desempenho está associado a uma matrícula específica e contém a nota e feedback sobre o aluno.
     """
 
     # NOME DA TABELA
-    __tablename__ = "avaliacoes"
+    __tablename__ = "desempenho"
 
     # COLUNAS
     id = Column(Integer, primary_key=True, index=True)
@@ -44,4 +41,5 @@ class Avaliacao(Base):
     matricula = relationship(
         "Matricula",
         back_populates="avaliacoes",
-    )
+
+    ) 
