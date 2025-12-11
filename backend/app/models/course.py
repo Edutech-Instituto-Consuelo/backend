@@ -37,7 +37,6 @@ class Curso(Base):
         ForeignKey("instrutores.id"), 
         nullable=False
     )
-
     # CONTROLE DE DATA/HISTÓRIOC
     data_criacao = Column(
         DateTime(timezone=True),
