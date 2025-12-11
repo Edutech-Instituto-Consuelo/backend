@@ -143,3 +143,7 @@ db.current: ## Mostra a versão atual aplicada no banco
 
 db.history: ## Mostra o histórico de migrations
 	docker compose exec backend bash -c "alembic history"
+
+db.stamp: ## Marca o banco como estando na última revision (HEAD), sem executar migrations
+	docker compose exec backend bash -c "alembic stamp head"
+
