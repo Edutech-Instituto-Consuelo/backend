@@ -37,6 +37,13 @@ class Curso(Base):
         ForeignKey("instrutores.id"), 
         nullable=False
     )
+
+    status_id = Column(
+        Integer, 
+        ForeignKey("status_curso.id", ondelete="RESTRICT"),
+        nullable=False)
+    
+
     # CONTROLE DE DATA/HISTÓRIOC
     data_criacao = Column(
         DateTime(timezone=True),
@@ -82,4 +89,11 @@ class Curso(Base):
     avaliacoes = relationship(
         "AvaliacaoCurso", 
         back_populates="curso"
+    )
+
+    #Status 1:N →  Muitos cursos podem usar o mesmo status
+    status = relationship(
+        "StatusCourse",
+        back_populates="cursos",
+        lazy="joined"  # carrega o status junto com o curso 
     )
