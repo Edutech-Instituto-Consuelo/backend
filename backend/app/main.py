@@ -1,8 +1,18 @@
 from fastapi import FastAPI
+from fastapi.exceptions import RequestValidationError
+from starlette.exceptions import HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from app.core.exceptions import AppException
+from app.core.error_handlers import (
+    app_exception_handler,
+    validation_exception_handler,
+    http_exception_handler,
+    unhandled_exception_handler
+)
 from app.core import middleware
 from app.core.cors import setup_cors
-from app.routers import auth
+from app.routers import auth, category, level, course, instructor
+from app.routers import evaluation
 import os
 
 # importando a função de teste de conexão com Supabse
@@ -28,6 +38,17 @@ app.add_middleware(
 middleware.register_jwt_middleware(app)
 
 app.include_router(auth.router)
+app.include_router(category.router)
+app.include_router(level.router)
+app.include_router(course.router)
+app.include_router(instructor.router)
+app.include_router(evaluation.router)
+
+# Handlers de errors de requisições
+app.add_exception_handler(AppException, app_exception_handler)
+app.add_exception_handler(RequestValidationError, validation_exception_handler)
+app.add_exception_handler(HTTPException, http_exception_handler)
+app.add_exception_handler(Exception, unhandled_exception_handler)
 
 # Importar e registrar router de enrollments
 from app.routers import enrollments

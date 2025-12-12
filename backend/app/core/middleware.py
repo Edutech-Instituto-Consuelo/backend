@@ -6,6 +6,7 @@ import os
 PUBLIC_PATHS = {
 	"/auth/login",
 	"/auth/register",
+	"/courses"
 }
 
 
@@ -27,6 +28,10 @@ def register_jwt_middleware(app):
 			if path in PUBLIC_PATHS:
 				return await call_next(request)
 
+			# Permitir acesso público à listagem de avaliações
+			if request.method == "GET" and path.startswith("/courses/") and path.endswith("/reviews"):
+				return await call_next(request)
+
 			auth_header = request.headers.get("Authorization")
 
 			if not auth_header or not auth_header.startswith("Bearer "):
@@ -44,8 +49,8 @@ def register_jwt_middleware(app):
 				status_code=e.status_code,
 				content={"detail": e.detail}
 			)
-		except Exception as e:
-			return JSONResponse(
-				status_code=500,
-				content={"detail": "Erro interno no servidor."}
-			)
+#		except Exception as e:
+#			return JSONResponse(
+#				status_code=500,
+#				content={"detail": "Erro interno no servidor."}
+#			)

@@ -60,7 +60,7 @@ class Matricula(Base):
 
     # Avaliações 1:N → Uma matrícula pode ter muitas avaliações
     avaliacoes = relationship(
-        "Avaliacao",
+        "DesempenhoAluno",
         back_populates="matricula",
         cascade="all, delete-orphan",
     )
