@@ -58,8 +58,19 @@ class UsuarioLogin(BaseModel):
 
 class TokenResponse(BaseModel):
     access_token: str
+    refresh_token: Optional[str] = None 
     token_type: str = "bearer"
 
 
 class UsuarioAdminUpdate(BaseModel):
     tipo_usuario: TipoUser
+
+
+# Classe que chama o email
+class Recuperacaodesenha(BaseModel):
+    email: EmailType
+
+# Recebe o token para autenticar a solicitação e a nova senha
+class Novasenha(BaseModel):
+    token: str = Field(..., description="Token de recuperação recebido por e-mail")
+    nova_senha: SenhaType
