@@ -167,3 +167,37 @@ class CursoEstatisticaItem(BaseModel):
 
     class Config:
         from_attributes = True
+urlImageType = Annotated[str, Field(max_length=255, description="URL da imagem do curso")
+]
+class CursoResponse(BaseModel):
+	id: int
+	url_image : Optional[urlImageType] = None
+	titulo: tituloType
+	id_instrutor: int
+	instrutor: InstrutorOrNivel
+	id_nivel: int
+	nivel: InstrutorOrNivel
+	avaliacao: mediaAvaliacao
+	quantidade_avaliacoes: qtdAvaliacao
+	preco: precoType
+
+	class Config:
+		from_attributes = True
+
+class CursoEspecificoResponse(BaseModel):
+	id: int
+	titulo: tituloType
+	descricao: descricaoType
+	avaliacao: mediaAvaliacao
+	quantidade_avaliacoes: qtdAvaliacao
+	quantidade_horas: int
+	id_nivel: int
+	nivel: InstrutorOrNivel
+	preco: precoType
+	id_instrutor: int
+	instrutor: InstrutorOrNivel
+	id_especialidade: int
+	especialidade_instrutor: str
+
+	class Config:
+		from_attributes = True

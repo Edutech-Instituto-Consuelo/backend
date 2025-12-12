@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core import middleware
 from app.core.cors import setup_cors
-from app.routers import auth
+from app.routers import auth, category, level, course, instructor
 from app.routers import evaluation
 import os
 
@@ -29,6 +29,10 @@ app.add_middleware(
 middleware.register_jwt_middleware(app)
 
 app.include_router(auth.router)
+app.include_router(category.router)
+app.include_router(level.router)
+app.include_router(course.router)
+app.include_router(instructor.router)
 app.include_router(evaluation.router)
 
 # Rota raiz

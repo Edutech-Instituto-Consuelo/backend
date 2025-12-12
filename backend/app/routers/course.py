@@ -28,6 +28,10 @@ LEVEL_ID_TO_TEXT = {
 }
 
 LEVEL_TEXT_TO_ID = {value: key for key, value in LEVEL_ID_TO_TEXT.items()}
+from app.schemas.course import CursoResponse, CursoEspecificoResponse
+from typing import Literal
+
+
 
 
 router = APIRouter(
