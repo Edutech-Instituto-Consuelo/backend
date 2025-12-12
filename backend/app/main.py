@@ -50,6 +50,10 @@ app.add_exception_handler(RequestValidationError, validation_exception_handler)
 app.add_exception_handler(HTTPException, http_exception_handler)
 app.add_exception_handler(Exception, unhandled_exception_handler)
 
+# Importar e registrar router de enrollments
+from app.routers import enrollments
+app.include_router(enrollments.router)
+
 # Rota raiz
 @app.get("/")
 def root():
