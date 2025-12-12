@@ -1,0 +1,1584 @@
+{
+  "id": "0",
+  "name": "SQL Import (postgresql)",
+  "createdAt": "2025-11-21T21:06:07.817Z",
+  "updatedAt": "2025-12-12T07:41:33.817Z",
+  "databaseType": "postgresql",
+  "tables": [
+    {
+      "id": "1",
+      "name": "matriculas",
+      "schema": "public",
+      "order": 10,
+      "fields": [
+        {
+          "id": "2",
+          "name": "id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "3",
+          "name": "aluno_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "4",
+          "name": "curso_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "5",
+          "name": "status_matricula",
+          "type": {
+            "id": "enum",
+            "name": "enum"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "createdAt": 1763759327242
+        },
+        {
+          "id": "6",
+          "name": "data_matricula",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "NOW()",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "7",
+          "name": "data_conclusao",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": true,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        }
+      ],
+      "indexes": [
+        {
+          "id": "8",
+          "name": "pk_matriculas_id",
+          "fieldIds": [
+            "2"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1765516463360
+        },
+        {
+          "id": "9",
+          "name": "matriculas_aluno_id_curso_id_key",
+          "fieldIds": [
+            "3",
+            "4"
+          ],
+          "unique": true,
+          "createdAt": 1763759327242
+        }
+      ],
+      "x": -363.1125594658738,
+      "y": 53.81422757096612,
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1763759327242,
+      "diagramId": "wvwhf3witbqd",
+      "width": 337
+    },
+    {
+      "id": "10",
+      "name": "aulas",
+      "schema": "public",
+      "order": 3,
+      "fields": [
+        {
+          "id": "11",
+          "name": "id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327241,
+          "increment": false
+        },
+        {
+          "id": "12",
+          "name": "modulo_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327241,
+          "increment": false
+        },
+        {
+          "id": "13",
+          "name": "titulo",
+          "type": {
+            "name": "varchar",
+            "id": "varchar",
+            "fieldAttributes": {
+              "hasCharMaxLength": true
+            },
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327241,
+          "increment": false,
+          "characterMaximumLength": "50"
+        },
+        {
+          "id": "14",
+          "name": "descricao_aula",
+          "type": {
+            "id": "text",
+            "name": "text"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1765516937392
+        },
+        {
+          "id": "15",
+          "name": "ordem_aula",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327241,
+          "increment": false
+        },
+        {
+          "id": "16",
+          "name": "duracao_minutos",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327241,
+          "increment": false
+        },
+        {
+          "id": "17",
+          "name": "data_criacao",
+          "type": {
+            "id": "timestamp",
+            "name": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1765516895816
+        },
+        {
+          "id": "18",
+          "name": "ultima_alteracao",
+          "type": {
+            "id": "timestamp",
+            "name": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1765516909415
+        },
+        {
+          "id": "19",
+          "name": "url_aula",
+          "type": {
+            "id": "text",
+            "name": "text"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1765516953872
+        }
+      ],
+      "indexes": [
+        {
+          "id": "20",
+          "name": "pk_aulas_id",
+          "fieldIds": [
+            "11"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1765516858080
+        },
+        {
+          "id": "21",
+          "name": "aulas_modulo_id_ordem_aula_key",
+          "fieldIds": [
+            "12",
+            "15"
+          ],
+          "unique": true,
+          "createdAt": 1763759327242
+        }
+      ],
+      "x": 1271.3265435794492,
+      "y": -133.06628453856257,
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1763759327242,
+      "diagramId": "wvwhf3witbqd",
+      "width": 337
+    },
+    {
+      "id": "22",
+      "name": "avaliacoes",
+      "schema": "public",
+      "order": 4,
+      "fields": [
+        {
+          "id": "23",
+          "name": "id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "24",
+          "name": "matricula_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "25",
+          "name": "nota",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "26",
+          "name": "comentario",
+          "type": {
+            "name": "varchar",
+            "id": "varchar",
+            "fieldAttributes": {
+              "hasCharMaxLength": true
+            },
+            "usageLevel": 1
+          },
+          "nullable": true,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false,
+          "characterMaximumLength": "200"
+        },
+        {
+          "id": "27",
+          "name": "data_avaliacao",
+          "type": {
+            "name": "date",
+            "id": "date",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "NOW()",
+          "createdAt": 1763759327242,
+          "increment": false
+        }
+      ],
+      "indexes": [
+        {
+          "id": "28",
+          "name": "pk_avaliacoes_id",
+          "fieldIds": [
+            "23"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1763760399013
+        }
+      ],
+      "x": 13.791954026938555,
+      "y": -138.85754477239269,
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1763759327242,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "29",
+      "name": "modulos",
+      "schema": "public",
+      "order": 11,
+      "fields": [
+        {
+          "id": "30",
+          "name": "id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "31",
+          "name": "curso_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "32",
+          "name": "titulo",
+          "type": {
+            "name": "varchar",
+            "id": "varchar",
+            "fieldAttributes": {
+              "hasCharMaxLength": true
+            },
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false,
+          "characterMaximumLength": "50"
+        },
+        {
+          "id": "33",
+          "name": "ordem",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "34",
+          "name": "descricao",
+          "type": {
+            "name": "varchar",
+            "id": "varchar",
+            "fieldAttributes": {
+              "hasCharMaxLength": true
+            },
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false,
+          "characterMaximumLength": "200"
+        },
+        {
+          "id": "35",
+          "name": "data_criacao",
+          "type": {
+            "id": "timestamp",
+            "name": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1765516763695
+        },
+        {
+          "id": "36",
+          "name": "ultima_alteracao",
+          "type": {
+            "id": "timestamp",
+            "name": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1765516779296
+        }
+      ],
+      "indexes": [
+        {
+          "id": "37",
+          "name": "pk_modulos_id",
+          "fieldIds": [
+            "30"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1765516767340
+        },
+        {
+          "id": "38",
+          "name": "modulos_curso_id_ordem_key",
+          "fieldIds": [
+            "31",
+            "33"
+          ],
+          "unique": true,
+          "createdAt": 1763759327242
+        }
+      ],
+      "x": 855.6879204616147,
+      "y": 85.83575332907442,
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1763759327242,
+      "diagramId": "wvwhf3witbqd",
+      "width": 337
+    },
+    {
+      "id": "39",
+      "name": "instrutores",
+      "schema": "public",
+      "order": 9,
+      "fields": [
+        {
+          "id": "40",
+          "name": "id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "41",
+          "name": "especialidade_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "createdAt": 1763759327242
+        },
+        {
+          "id": "42",
+          "name": "biografia",
+          "type": {
+            "name": "varchar",
+            "id": "varchar",
+            "fieldAttributes": {
+              "hasCharMaxLength": true
+            },
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false,
+          "characterMaximumLength": "300"
+        },
+        {
+          "id": "43",
+          "name": "data_cadastro",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "NOW()",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "44",
+          "name": "ultima_alteracao",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "NOW()",
+          "createdAt": 1763759327242,
+          "increment": false
+        }
+      ],
+      "indexes": [
+        {
+          "id": "45",
+          "name": "pk_instrutores_id",
+          "fieldIds": [
+            "40"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1763762597574
+        }
+      ],
+      "x": 46.71397715779872,
+      "y": 265.08611000498206,
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1763759327242,
+      "diagramId": "wvwhf3witbqd",
+      "width": 337
+    },
+    {
+      "id": "46",
+      "name": "categorias",
+      "schema": "public",
+      "order": 5,
+      "fields": [
+        {
+          "id": "47",
+          "name": "id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "48",
+          "name": "nome",
+          "type": {
+            "name": "varchar",
+            "id": "varchar",
+            "fieldAttributes": {
+              "hasCharMaxLength": true
+            },
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": true,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false,
+          "characterMaximumLength": "100"
+        },
+        {
+          "id": "49",
+          "name": "descricao",
+          "type": {
+            "name": "text",
+            "id": "text",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        }
+      ],
+      "indexes": [
+        {
+          "id": "50",
+          "name": "pk_categorias_id",
+          "fieldIds": [
+            "47"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1763760943260
+        }
+      ],
+      "x": 835.4396526706691,
+      "y": 547.6189823085598,
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1763759327242,
+      "diagramId": "wvwhf3witbqd",
+      "width": 224
+    },
+    {
+      "id": "51",
+      "name": "especialidade",
+      "x": 128.43381361961795,
+      "y": 547.9072483150521,
+      "fields": [
+        {
+          "id": "52",
+          "name": "id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1763762608281
+        },
+        {
+          "id": "53",
+          "name": "tipo",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1763762661800
+        },
+        {
+          "id": "54",
+          "name": "descricao",
+          "type": {
+            "id": "text",
+            "name": "text"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1763762695705
+        }
+      ],
+      "indexes": [
+        {
+          "id": "55",
+          "name": "pk_table_12_id",
+          "fieldIds": [
+            "52"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1763762608281
+        }
+      ],
+      "color": "#8eb7ff",
+      "createdAt": 1763762608281,
+      "isView": false,
+      "order": 11,
+      "schema": "public",
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "56",
+      "name": "usuarios",
+      "schema": "public",
+      "order": 14,
+      "fields": [
+        {
+          "id": "57",
+          "name": "id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": true,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "58",
+          "name": "tipo_id",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "createdAt": 1763759327242
+        },
+        {
+          "id": "59",
+          "name": "nome",
+          "type": {
+            "name": "varchar",
+            "id": "varchar",
+            "fieldAttributes": {
+              "hasCharMaxLength": true
+            },
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "60",
+          "name": "email",
+          "type": {
+            "name": "text",
+            "id": "text",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": true,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "61",
+          "name": "senha_hash",
+          "type": {
+            "name": "varchar",
+            "id": "varchar",
+            "fieldAttributes": {
+              "hasCharMaxLength": true
+            },
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "62",
+          "name": "data_nascimento",
+          "type": {
+            "id": "bigint",
+            "name": "bigint"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1763771281346
+        },
+        {
+          "id": "63",
+          "name": "data_cadastro",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "(now())",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "64",
+          "name": "ultimo_login",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": true,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "65",
+          "name": "ultima_alteracao",
+          "type": {
+            "id": "timestamp",
+            "name": "timestamp"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1765516290190
+        }
+      ],
+      "indexes": [
+        {
+          "id": "66",
+          "name": "pk_usuarios_id",
+          "fieldIds": [
+            "57"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1763759901814
+        }
+      ],
+      "x": -345.01611563442714,
+      "y": 338.77151620988104,
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1763759327242,
+      "diagramId": "wvwhf3witbqd",
+      "width": 337
+    },
+    {
+      "id": "67",
+      "name": "progresso_aulas",
+      "schema": "public",
+      "order": 13,
+      "fields": [
+        {
+          "id": "68",
+          "name": "matricula_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "69",
+          "name": "aulas_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "70",
+          "name": "concluida",
+          "type": {
+            "name": "boolean",
+            "id": "boolean",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "FALSE",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "71",
+          "name": "data_conclusao",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": true,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        }
+      ],
+      "indexes": [],
+      "x": 725.910561309504,
+      "y": -165.66776371320645,
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1763759327242,
+      "diagramId": "wvwhf3witbqd",
+      "width": 337
+    },
+    {
+      "id": "72",
+      "name": "certificados",
+      "schema": "public",
+      "order": 7,
+      "fields": [
+        {
+          "id": "73",
+          "name": "id",
+          "type": {
+            "name": "uuid",
+            "id": "uuid",
+            "usageLevel": 2
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": false,
+          "default": "uuid_generate_v4()",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "74",
+          "name": "matricula_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "75",
+          "name": "data_conclusao",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "NOW()",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "76",
+          "name": "data_emissao",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        }
+      ],
+      "indexes": [
+        {
+          "id": "77",
+          "name": "pk_certificados_id",
+          "fieldIds": [
+            "73"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1763760259233
+        }
+      ],
+      "x": -367.3175536458325,
+      "y": -196.60332290050175,
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1763759327242,
+      "diagramId": "wvwhf3witbqd",
+      "width": 337
+    },
+    {
+      "id": "78",
+      "name": "cursos",
+      "schema": "public",
+      "order": 8,
+      "fields": [
+        {
+          "id": "79",
+          "name": "id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": true,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "80",
+          "name": "instrutor_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "81",
+          "name": "nivel_id",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "createdAt": 1763759327242
+        },
+        {
+          "id": "82",
+          "name": "categorias_id",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1763761017566
+        },
+        {
+          "id": "83",
+          "name": "titulo",
+          "type": {
+            "name": "varchar",
+            "id": "varchar",
+            "fieldAttributes": {
+              "hasCharMaxLength": true
+            },
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": true,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false,
+          "characterMaximumLength": "100"
+        },
+        {
+          "id": "84",
+          "name": "descricao",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "createdAt": 1763759327242,
+          "characterMaximumLength": "100"
+        },
+        {
+          "id": "85",
+          "name": "sobre",
+          "type": {
+            "id": "text",
+            "name": "text"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1765516705952
+        },
+        {
+          "id": "86",
+          "name": "preco",
+          "type": {
+            "name": "numeric",
+            "id": "numeric",
+            "fieldAttributes": {
+              "precision": {
+                "max": 999,
+                "min": 1,
+                "default": 10
+              },
+              "scale": {
+                "max": 999,
+                "min": 0,
+                "default": 2
+              }
+            }
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "87",
+          "name": "carga_horaria",
+          "type": {
+            "id": "integer",
+            "name": "integer"
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "88",
+          "name": "data_criacao",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "NOW()",
+          "createdAt": 1763759327242,
+          "increment": false
+        },
+        {
+          "id": "89",
+          "name": "ultima_alteracao",
+          "type": {
+            "name": "timestamp",
+            "id": "timestamp",
+            "usageLevel": 1
+          },
+          "nullable": false,
+          "primaryKey": false,
+          "unique": false,
+          "default": "NOW()",
+          "createdAt": 1763759327242,
+          "increment": false
+        }
+      ],
+      "indexes": [
+        {
+          "id": "90",
+          "name": "pk_cursos_id",
+          "fieldIds": [
+            "79"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1763761020277
+        }
+      ],
+      "x": 424.40364650468723,
+      "y": 117.74578383519716,
+      "color": "#8eb7ff",
+      "isView": false,
+      "createdAt": 1763759327242,
+      "diagramId": "wvwhf3witbqd",
+      "expanded": true,
+      "width": 337
+    },
+    {
+      "id": "91",
+      "name": "nivel_curso",
+      "x": 903.6501783303722,
+      "y": 412.3841377284014,
+      "fields": [
+        {
+          "id": "92",
+          "name": "id",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1765517264945
+        },
+        {
+          "id": "93",
+          "name": "descricao",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "unique": false,
+          "nullable": true,
+          "primaryKey": false,
+          "createdAt": 1765517303343,
+          "characterMaximumLength": "20"
+        }
+      ],
+      "indexes": [
+        {
+          "id": "94",
+          "name": "pk_table_12_id",
+          "fieldIds": [
+            "92"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1765517264946
+        }
+      ],
+      "color": "#8eb7ff",
+      "createdAt": 1765517264945,
+      "isView": false,
+      "order": 11,
+      "schema": "public",
+      "width": 224
+    },
+    {
+      "id": "95",
+      "name": "tipo_usuario",
+      "x": -326.17838433305735,
+      "y": 699.8131093881511,
+      "fields": [
+        {
+          "id": "96",
+          "name": "id",
+          "type": {
+            "id": "int",
+            "name": "int"
+          },
+          "unique": true,
+          "nullable": false,
+          "primaryKey": true,
+          "createdAt": 1765522862386
+        },
+        {
+          "id": "97",
+          "name": "descricao",
+          "type": {
+            "id": "varchar",
+            "name": "varchar"
+          },
+          "unique": false,
+          "nullable": false,
+          "primaryKey": false,
+          "createdAt": 1765522900002,
+          "characterMaximumLength": "15"
+        }
+      ],
+      "indexes": [
+        {
+          "id": "98",
+          "name": "pk_table_13_id",
+          "fieldIds": [
+            "96"
+          ],
+          "unique": true,
+          "isPrimaryKey": true,
+          "createdAt": 1765522862386
+        }
+      ],
+      "color": "#8eb7ff",
+      "createdAt": 1765522862386,
+      "isView": false,
+      "order": 12,
+      "schema": "public"
+    }
+  ],
+  "relationships": [
+    {
+      "id": "99",
+      "name": "aulas_modulo_id_fkey",
+      "sourceSchema": "public",
+      "targetSchema": "public",
+      "sourceTableId": "10",
+      "targetTableId": "29",
+      "sourceFieldId": "12",
+      "targetFieldId": "30",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763759327243,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "100",
+      "name": "avaliacoes_matricula_id_fkey",
+      "sourceSchema": "public",
+      "targetSchema": "public",
+      "sourceTableId": "22",
+      "targetTableId": "1",
+      "sourceFieldId": "24",
+      "targetFieldId": "2",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763759327243,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "101",
+      "name": "categorias_id_fk",
+      "sourceSchema": "public",
+      "sourceTableId": "46",
+      "targetSchema": "public",
+      "targetTableId": "78",
+      "sourceFieldId": "47",
+      "targetFieldId": "82",
+      "sourceCardinality": "one",
+      "targetCardinality": "many",
+      "createdAt": 1763761122100,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "102",
+      "name": "certificados_matricula_id_fkey",
+      "sourceSchema": "public",
+      "targetSchema": "public",
+      "sourceTableId": "72",
+      "targetTableId": "1",
+      "sourceFieldId": "74",
+      "targetFieldId": "2",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763759327243,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "103",
+      "name": "cursos_instrutor_id_fkey",
+      "sourceSchema": "public",
+      "targetSchema": "public",
+      "sourceTableId": "78",
+      "targetTableId": "39",
+      "sourceFieldId": "80",
+      "targetFieldId": "40",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763759327243,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "104",
+      "name": "especialidade_id_fk",
+      "sourceSchema": "public",
+      "sourceTableId": "51",
+      "targetSchema": "public",
+      "targetTableId": "39",
+      "sourceFieldId": "52",
+      "targetFieldId": "41",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763762721533,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "105",
+      "name": "instrutores_id_fkey",
+      "sourceSchema": "public",
+      "targetSchema": "public",
+      "sourceTableId": "39",
+      "targetTableId": "56",
+      "sourceFieldId": "40",
+      "targetFieldId": "57",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763759327243,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "106",
+      "name": "matriculas_aluno_id_fk",
+      "sourceSchema": "public",
+      "sourceTableId": "1",
+      "targetSchema": "public",
+      "targetTableId": "56",
+      "sourceFieldId": "3",
+      "targetFieldId": "57",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763771625163,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "107",
+      "name": "matriculas_curso_id_fkey",
+      "sourceSchema": "public",
+      "targetSchema": "public",
+      "sourceTableId": "1",
+      "targetTableId": "78",
+      "sourceFieldId": "4",
+      "targetFieldId": "79",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763759327243,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "108",
+      "name": "modulos_curso_id_fkey",
+      "sourceSchema": "public",
+      "targetSchema": "public",
+      "sourceTableId": "29",
+      "targetTableId": "78",
+      "sourceFieldId": "31",
+      "targetFieldId": "79",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763759327243,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "109",
+      "name": "progresso_aulas_aulas_id_fkey",
+      "sourceSchema": "public",
+      "targetSchema": "public",
+      "sourceTableId": "67",
+      "targetTableId": "10",
+      "sourceFieldId": "69",
+      "targetFieldId": "11",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763759327243,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "110",
+      "name": "progresso_aulas_matricula_id_fkey",
+      "sourceSchema": "public",
+      "targetSchema": "public",
+      "sourceTableId": "67",
+      "targetTableId": "1",
+      "sourceFieldId": "68",
+      "targetFieldId": "2",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1763759327243,
+      "diagramId": "wvwhf3witbqd"
+    },
+    {
+      "id": "111",
+      "name": "cursos_nivel_fk",
+      "sourceSchema": "public",
+      "sourceTableId": "78",
+      "targetSchema": "public",
+      "targetTableId": "91",
+      "sourceFieldId": "81",
+      "targetFieldId": "92",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1765517710857
+    },
+    {
+      "id": "112",
+      "name": "usuarios_tipo_id_fk",
+      "sourceSchema": "public",
+      "sourceTableId": "56",
+      "targetSchema": "public",
+      "targetTableId": "95",
+      "sourceFieldId": "58",
+      "targetFieldId": "96",
+      "sourceCardinality": "many",
+      "targetCardinality": "one",
+      "createdAt": 1765522944003
+    }
+  ],
+  "dependencies": [],
+  "areas": [],
+  "customTypes": []
+}
