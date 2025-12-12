@@ -46,21 +46,49 @@ def verify_token(token: str):
 			status_code=status.HTTP_401_UNAUTHORIZED,
 			detail="Token inválido ou expirado.")
 
-def allowed_roles(*list_roles:str):
-	"""Função que funciona como um decorador no fastAPI, deve ser usada atraves de um Depends nas rotas
 
-	Exemplo de uso: Depens(allowed_roles("aluno", "admin", "instrutor")).
-	Todas as roles passadas no argumentos serão autorizadas, se não passar nada, todas tem acesso
-	"""
-	def dependency(request: Request) -> dict:
-		"""Função dependencia que retorna dicionario com os dados do payload do usuario"""
-		user = request.state.user
-		role = user.get("role")
-		print(role)
-		if list_roles and role not in list_roles:
-			raise HTTPException(
-				status_code=status.HTTP_401_UNAUTHORIZED,
-				detail="Role não permitida"
-			)
-		return user
-	return dependency
+def allowed_roles(*list_roles: str):
+    """
+    Função que funciona como um decorador no FastAPI, deve ser usada através de um Depends nas rotas.
+
+    Exemplo de uso:
+        Depends(allowed_roles("aluno", "admin", "instrutor"))
+
+    Todas as roles passadas nos argumentos serão autorizadas.
+    Se não passar nada, qualquer role autenticada tem acesso.
+    """
+    def dependency(request: Request) -> dict:
+        """
+        Função dependência que retorna um dicionário com os dados do payload do usuário.
+        Primeiro tenta usar o que o middleware colocou em request.state.user.
+        Se não houver, faz o parse do header Authorization aqui mesmo.
+        """
+
+        # 1) Tenta pegar o usuário setado pelo middleware
+        user = getattr(request.state, "user", None)
+
+        # 2) Se o middleware não setou, tentamos extrair o token direto do header
+        if user is None:
+            auth_header = request.headers.get("Authorization")
+            if not auth_header or not auth_header.startswith("Bearer "):
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Token não fornecido."
+                )
+
+            token = auth_header.split(" ", 1)[1]
+            user = verify_token(token)
+
+        role = user.get("role")
+        print(role)
+
+        # 3) Se foi passada uma lista de roles, validamos se a role do usuário é permitida
+        if list_roles and role not in list_roles:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Role não permitida"
+            )
+
+        return user
+
+    return dependency
