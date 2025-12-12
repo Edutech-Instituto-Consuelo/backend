@@ -16,7 +16,8 @@ class StatusCurso(Base):
 
     #COLUNAS
     id = Column(Integer, primary_key=True, index=True)
-    descricao = Column(String(200), nullable=True) #Rascunho, publicado, Descontinuado
+    #Rascunho, publicacao_pendente, publicado, despublicacao_pendente, Descontinuado
+    descricao = Column(String(200), nullable=True) 
 
 
     #RELACIONAMENTOS
