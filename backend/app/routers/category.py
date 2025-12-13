@@ -5,6 +5,7 @@ from app.core.security import allowed_roles
 from app.models.category import Categoria
 from app.schemas.category import CategoriaCreate, CategoriaResponse, CategoriaUpdate
 from typing import List
+from app.core.response import success_response
 
 
 router = APIRouter(
@@ -37,7 +38,11 @@ def cria_categoria(
 	db.commit()
 	db.refresh(categoria_add)
 
-	return categoria_add
+	return success_response(
+		data=CategoriaResponse.model_validate(categoria_add),
+		message="Categoria criada com sucesso.",
+		status_code=status.HTTP_201_CREATED
+	)
 
 
 @router.get("/", response_model=List[CategoriaResponse])
@@ -46,7 +51,10 @@ def listar_categoria(
 ):
 	categorias = db.query(Categoria)
 
-	return categorias
+	return success_response(
+		data=[CategoriaResponse.model_validate(c) for c in categorias],
+		message="Categorias listadas com sucesso."
+	)
 
 @router.patch("/{id_categoria}", response_model=CategoriaResponse)
 def atualiza_categoria(
@@ -72,7 +80,10 @@ def atualiza_categoria(
 	db.commit()
 	db.refresh(categoria_db)
 
-	return categoria_db
+	return success_response(
+		data=CategoriaResponse.model_validate(categoria_db),
+		message="Categoria atualizada com sucesso."
+	)
 
 @router.delete("/{id_categoria}", status_code=status.HTTP_204_NO_CONTENT)
 def deleta_categoria(
@@ -91,4 +102,8 @@ def deleta_categoria(
 	db.delete(categoria_db)
 	db.commit()
 
-	return None
+	return success_response(
+		data=None,
+		message="Categoria removida com sucesso.",
+		status_code=status.HTTP_200_OK
+	)

@@ -9,7 +9,7 @@ from app.schemas.user import UsuarioCriar, UsuarioResponse, TokenResponse, Usuar
 from app.schemas.user import UsuarioLogin
 from typing import List
 from app.core.security import create_access_token
-
+from app.core.response import success_response
 
 router = APIRouter(
 	prefix="/auth",
@@ -44,24 +44,30 @@ def registra_usuario(
 	db.add(db_usuario)
 	db.commit()
 	db.refresh(db_usuario)
-	return db_usuario
+
+	return success_response(
+		data=UsuarioResponse.model_validate(db_usuario),
+		message="Usuário registrado com sucesso.",
+		status_code=status.HTTP_201_CREATED
+	)
 
 @router.get("/usuarios", response_model=List[UsuarioResponse])
 def listar_usuarios(db: Session = Depends(get_db) , require = Depends(allowed_roles("admin"))):
 	"""Função que retorna todos os usuarios cadastrados"""
 	query = db.query(Usuario)
+	print(query)
 
-	return query
+	return success_response(
+		data=[UsuarioResponse.model_validate(u) for u in query],
+		message="Usuários listados com sucesso."
+	)
 
 # Rota de login
 
 @router.post("/login", response_model=TokenResponse)
 def login(data: UsuarioLogin, db: Session = Depends(get_db)):
 	"""
-	Recebo dados em json do front. Padrão email e senha como definido no shema user UsuarioLogin.
-	Depois busco no banco algum usuario que tenha o mesmo email, verifico se consigo achar,
-	se conseguir verifico a senha e caso esteja errado retorn erro pro front. Caso esetja certo gero
-	o token e retorno o mesmo para o front.
+	Login do usuario, recebe email e senha adiciona o salt e verifica se existe e é real.
 	"""
 	user = db.query(Usuario).filter(Usuario.email == data.email).first()
 	if not user:
@@ -85,4 +91,8 @@ def login(data: UsuarioLogin, db: Session = Depends(get_db)):
 def get_me(db:Session = Depends(get_db), usuario = Depends(allowed_roles())):
 	"""Rota para obter informações do usuário autenticado"""
 	user = db.query(Usuario).filter(Usuario.id == usuario["id"]).first()
-	return user
+	return success_response(
+		data=UsuarioResponse.model_validate(user),
+		message="Dados do usuário retornados com sucesso.",
+		status_code=status.HTTP_200_OK
+	)

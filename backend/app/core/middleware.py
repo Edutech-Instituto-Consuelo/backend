@@ -6,7 +6,9 @@ import os
 PUBLIC_PATHS = {
 	"/auth/login",
 	"/auth/register",
-	"/courses"
+	"/courses",
+	"/docs",
+	"/openapi.json"
 }
 
 

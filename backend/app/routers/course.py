@@ -11,8 +11,7 @@ from app.models.evaluation import AvaliacaoCurso
 
 from app.schemas.course import CursoResponse, CursoEspecificoResponse
 from typing import Literal
-
-
+from app.core.response import success_response
 
 
 router = APIRouter(
@@ -22,7 +21,7 @@ router = APIRouter(
 
 precoList = Literal["pago", "gratuito"]
 
-@router.get("",response_model=List[CursoResponse])
+@router.get("/",response_model=List[CursoResponse])
 def listar_cursos(
 	id_categoria: int = 0,
 	id_nivel: int = 0,
@@ -58,7 +57,11 @@ def listar_cursos(
 			)
 		)
 
-	return resposta
+	return success_response(
+		data=resposta,
+		message="Cursos listados com sucesso.",
+		status_code=status.HTTP_200_OK
+	)
 
 
 @router.get("/{id_curso}", response_model=CursoEspecificoResponse)
@@ -84,18 +87,22 @@ def pegar_curso(
 			detail=f"Curso com id {id_curso}, não encontado"
 		)
 	curso, avaliacao_media, qtd_avaliacoes = resultado
-	return CursoEspecificoResponse(
-		id=curso.id,
-		titulo=curso.titulo,
-		descricao=curso.descricao,
-		avaliacao=float(avaliacao_media or 0.0),
-		quantidade_avaliacoes=int(qtd_avaliacoes or 0),
-		quantidade_horas=curso.carga_horaria,
-		id_nivel=curso.nivel_id,
-		nivel=curso.nivel.descricao,
-		preco=curso.preco,
-		id_instrutor=curso.instrutor_id,
-		instrutor=curso.instrutor.usuario.nome,
-		id_especialidade=curso.instrutor.especialidade,
-		especialidade_instrutor=curso.instrutor.especialidade_rel.nome,
+	return success_response(
+		data=CursoEspecificoResponse(
+			id=curso.id,
+			titulo=curso.titulo,
+			descricao=curso.descricao,
+			avaliacao=float(avaliacao_media or 0.0),
+			quantidade_avaliacoes=int(qtd_avaliacoes or 0),
+			quantidade_horas=curso.carga_horaria,
+			id_nivel=curso.nivel_id,
+			nivel=curso.nivel.descricao,
+			preco=curso.preco,
+			id_instrutor=curso.instrutor_id,
+			instrutor=curso.instrutor.usuario.nome,
+			id_especialidade=curso.instrutor.especialidade,
+			especialidade_instrutor=curso.instrutor.especialidade_rel.nome,
+		),
+		message="Curso encontrado com sucesso.",
+		status_code=status.HTTP_200_OK
 	)

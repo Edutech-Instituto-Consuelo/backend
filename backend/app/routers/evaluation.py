@@ -8,6 +8,7 @@ from app.models.course import Curso
 from app.models.enrollment import Matricula
 from app.schemas.evaluation import AvaliacaoCriar, AvaliacaoResponse
 from app.core.security import allowed_roles
+from app.core.response import success_response
 
 router = APIRouter(
     prefix="/courses",
@@ -29,7 +30,7 @@ class AvaliacaoListaResponse(BaseModel):
         from_attributes = True
 
 # Rota para listar avaliações de um curso
-@router.get("/{curso_id}/reviews", response_model=List[AvaliacaoListaResponse])
+@router.get("/{curso_id}/reviews", status_code=status.HTTP_200_OK)
 def listar_avaliacoes(
     curso_id: int = Path(..., gt=0),
     db: Session = Depends(get_db)
@@ -49,7 +50,6 @@ def listar_avaliacoes(
         AvaliacaoCurso.curso_id == curso_id
     ).all()
 
-    # Mapear para resposta com nome_usuario
     resultado = []
     for avaliacao in avaliacoes:
         resultado.append({
@@ -60,7 +60,12 @@ def listar_avaliacoes(
             "data": avaliacao.data_criacao
         })
 
-    return resultado
+    return success_response(
+        data=resultado,
+        message="Avaliações listadas com sucesso",
+        status_code=status.HTTP_200_OK
+    )
+
 
 # Rota para criar uma nova avaliação
 @router.post("/{curso_id}/reviews", response_model=AvaliacaoResponse, status_code=status.HTTP_201_CREATED)
@@ -75,7 +80,7 @@ def criar_avaliacao(
     Requer que o usuário seja um aluno e esteja matriculado no curso.
     """
     usuario_id = usuario_autenticado["id"]
-    
+
     # Verificar se o curso existe
     curso = db.query(Curso).filter(Curso.id == curso_id).first()
     if not curso:
@@ -120,4 +125,8 @@ def criar_avaliacao(
     db.commit()
     db.refresh(nova_avaliacao)
 
-    return nova_avaliacao
+    return success_response(
+        data=AvaliacaoResponse.model_validate(nova_avaliacao),
+        message="Avaliação criada com sucesso",
+        status_code=status.HTTP_201_CREATED
+    )
