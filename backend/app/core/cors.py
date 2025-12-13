@@ -7,7 +7,11 @@ def setup_cors(app):
 	em origins, deve adicionar as rotas permitidas, em desenvolvimento, colocar '*' para tudos
 	"""
 
-	origins = ["*"]
+	origins = [
+		"http://localhost:5173",  # O local que confirmaram no chat (Vite)
+		"http://localhost:3000",  # Deixei o 3000 caso alguém rode nesse também
+		"https://plataforma-instituto-consuelo.vercel.app" # A URL de produção (sem a barra / no final)
+	]
 
 	app.add_middleware(
 		CORSMiddleware,
