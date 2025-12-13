@@ -84,7 +84,11 @@ def login(data: UsuarioLogin, db: Session = Depends(get_db)):
 			)
 
 	token = create_access_token(user_id=user.id, email=user.email, role=user.tipo_usuario)
-	return {"access_token": token}
+	return success_response(
+		data={"access_token": token},
+		message="Login realizado com sucesso",
+		status_code=status.HTTP_200_OK
+	)
 
 # Rota para obter informações do usuário autenticado
 @router.get("/me", response_model=UsuarioResponse)
