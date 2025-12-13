@@ -27,15 +27,21 @@ app = FastAPI(
     version="1.0.0"
 )
 
+middleware.register_jwt_middleware(app)
+
+origins = [
+    "http://localhost:5173",  # Localhost (Vite)
+    "http://localhost:3000",  # Localhost (Alternativo)
+    "https://plataforma-instituto-consuelo.vercel.app" # Produção (Sem a barra no final)
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins, # <-- USANDO AS ORIGENS ESPECÍFICAS (Adeus erro 401!)
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-middleware.register_jwt_middleware(app)
 
 app.include_router(auth.router)
 app.include_router(category.router)
