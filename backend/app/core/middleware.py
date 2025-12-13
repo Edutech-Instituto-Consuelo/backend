@@ -5,11 +5,11 @@ from app.core.security import verify_token
 import os
 
 PUBLIC_PATHS = {
-    "/auth/login",
-    "/auth/register",
-    "/courses",
-    "/categories",
-    "/levels",
+	"/auth/login",
+	"/auth/register",
+	"/courses",
+	"/docs",
+	"/openapi.json"
 }
 
 if os.getenv("ENV", "development") == "development":
